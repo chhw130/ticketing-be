@@ -52,6 +52,7 @@ public class ConcertService {
 		return ConcertResponse.from(concert);
 	}
 
+	@Transactional
 	public void delete(Long id){
 		concertRepository.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "공연을 찾을 수 없습니다."));
