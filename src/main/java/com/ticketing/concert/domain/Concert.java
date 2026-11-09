@@ -11,17 +11,16 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 
 /**
  * 공연. DB의 concert 테이블과 1:1로 대응한다.
  * 1단계에서 회차(schedule), 좌석(seat)이 이 엔티티에 연관관계로 붙는다.
+ * seat -> schedule -> concert
  */
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA가 쓰는 기본 생성자. 외부에서 빈 객체를 못 만들게 막는다
 public class Concert {
 
