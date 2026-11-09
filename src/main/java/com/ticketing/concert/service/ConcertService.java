@@ -38,5 +38,26 @@ public class ConcertService {
 	}
 
 	// TODO(0단계 연습): update, delete 를 직접 추가해 보기
+	// 클래스 기본값이 readOnly라서, 쓰기 메서드에는 @Transactional을 따로 붙여야 변경이 DB에 반영된다
+	@Transactional
+	public ConcertResponse update(Long id, ConcertCreateRequest request){
+		Concert concert = concertRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "공연을 찾을 수 없습니다. id=" + id));
+
+		//dto타입을 전체 넘겨 받아도 되지만,,, entity가 Dto타입까지 알게 되어버림.
+		concert.update(request.title(), request.venue(), request.genre(), request.description(), request.startDate(), request.endDate());
+
+		// save()를 부르지 않아도 트랜잭션이 끝날 때 변경 감지(dirty checking)로 UPDATE가 나간다.
+		// concert 객체는 이미 바뀐 값이라 다시 조회할 필요 없이 그대로 DTO로 바꾼다
+		return ConcertResponse.from(concert);
+	}
+
+	public void delete(Long id){
+		concertRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "공연을 찾을 수 없습니다."));
+
+		concertRepository.deleteById(id);
+	}
+
 
 }

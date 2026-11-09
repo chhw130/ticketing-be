@@ -10,6 +10,8 @@ import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 
@@ -19,6 +21,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA가 쓰는 기본 생성자. 외부에서 빈 객체를 못 만들게 막는다
 public class Concert {
 
@@ -54,4 +57,12 @@ public class Concert {
 		this.endDate = endDate;
 	}
 
+	public void update(String title, String venue, Genre genre, String description, LocalDate startDate, LocalDate endDate) {
+		this.title = title;
+		this.venue = venue;
+		this.genre = genre;
+		this.description = description;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
 }

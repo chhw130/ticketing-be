@@ -9,7 +9,6 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
-// @Schema의 example 값이 Swagger UI의 "Try it out" 요청 본문에 미리 채워진다
 public record ConcertCreateRequest(
 		@Schema(description = "공연명", example = "2027 봄 콘서트")
 		@NotBlank @Size(max = 100) String title,
