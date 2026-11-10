@@ -4,11 +4,11 @@ import com.ticketing.concert.domain.Concert;
 import com.ticketing.concert.dto.ConcertCreateRequest;
 import com.ticketing.concert.dto.ConcertResponse;
 import com.ticketing.concert.repository.ConcertRepository;
+import com.ticketing.global.error.BusinessException;
+import com.ticketing.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class ConcertService {
 
 	public ConcertResponse findById(Long id) {
 		Concert concert = concertRepository.findById(id)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "공연을 찾을 수 없습니다. id=" + id));
+				.orElseThrow(() -> new BusinessException(ErrorCode.CONCERT_NOT_FOUND, "id=" + id));
 		return ConcertResponse.from(concert);
 	}
 
@@ -37,12 +37,11 @@ public class ConcertService {
 		return ConcertResponse.from(saved);
 	}
 
-	// TODO(0단계 연습): update, delete 를 직접 추가해 보기
 	// 클래스 기본값이 readOnly라서, 쓰기 메서드에는 @Transactional을 따로 붙여야 변경이 DB에 반영된다
 	@Transactional
 	public ConcertResponse update(Long id, ConcertCreateRequest request){
 		Concert concert = concertRepository.findById(id)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "공연을 찾을 수 없습니다. id=" + id));
+				.orElseThrow(() -> new BusinessException(ErrorCode.CONCERT_NOT_FOUND, "id=" + id));
 
 		//dto타입을 전체 넘겨 받아도 되지만,,, entity가 Dto타입까지 알게 되어버림.
 		concert.update(request.title(), request.venue(), request.genre(), request.description(), request.startDate(), request.endDate());
@@ -55,7 +54,7 @@ public class ConcertService {
 	@Transactional
 	public void delete(Long id){
 		concertRepository.findById(id)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "공연을 찾을 수 없습니다."));
+				.orElseThrow(() -> new BusinessException(ErrorCode.CONCERT_NOT_FOUND, "id=" + id));
 
 		concertRepository.deleteById(id);
 	}
