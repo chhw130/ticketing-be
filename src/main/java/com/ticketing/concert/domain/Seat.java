@@ -7,6 +7,12 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Table(
+        uniqueConstraints = @UniqueConstraint(
+                name = "uk_seat_schedule_seat_number",
+                columnNames = {"schedule_id", "seat_number"}
+        )
+)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Seat {
 
