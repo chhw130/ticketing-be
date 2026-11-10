@@ -2,7 +2,9 @@ package com.ticketing.concert.controller;
 
 import com.ticketing.concert.dto.ConcertCreateRequest;
 import com.ticketing.concert.dto.ConcertResponse;
+import com.ticketing.concert.dto.ScheduleResponse;
 import com.ticketing.concert.service.ConcertService;
+import com.ticketing.concert.service.ScheduleService;
 import com.ticketing.global.common.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,6 +32,7 @@ import java.util.List;
 public class ConcertController {
 
 	private final ConcertService concertService;
+	private final ScheduleService scheduleService; // 공연의 회차 목록을 위해. 같은 concert 패키지라 의존 방향 문제가 없다
 
 	@Operation(summary = "공연 목록 조회")
 	@ApiResponse(responseCode = "200", description = "공연 리스트 조회")
@@ -45,6 +48,14 @@ public class ConcertController {
 	@GetMapping("/{id}")
 	public ApiResult<ConcertResponse> findById(@Parameter(description = "공연 id", example = "1") @PathVariable Long id) {
 		return ApiResult.of("조회 성공", concertService.findById(id));
+	}
+
+	@Operation(summary = "공연의 회차 목록 조회", description = "그 공연의 회차를 시작 시각 순으로 돌려준다")
+	@ApiResponse(responseCode = "200", description = "조회 성공")
+	@ApiResponse(responseCode = "404", description = "해당 id의 공연이 없음")
+	@GetMapping("/{id}/schedules")
+	public ApiResult<List<ScheduleResponse>> findSchedules(@Parameter(description = "공연 id", example = "1") @PathVariable Long id) {
+		return ApiResult.of("조회 성공", scheduleService.findByConcertId(id));
 	}
 
 	@Operation(summary = "공연 수정")
