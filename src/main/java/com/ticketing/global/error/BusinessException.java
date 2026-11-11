@@ -16,8 +16,7 @@ public class BusinessException extends RuntimeException {
 
 	// 기본 메시지 뒤에 상황별 정보를 붙이고 싶을 때 쓴다. 예: "공연을 찾을 수 없습니다. id=3"
 	public BusinessException(ErrorCode errorCode, String detail) {
-		// detail이 비어 있으면 기본 메시지만 쓴다 (예: 로그인 실패는 아이디를 메시지에 넣지 않는다)
-		super(detail == null || detail.isBlank() ? errorCode.getMessage() : errorCode.getMessage() + " " + detail);
+		super(errorCode.getMessage() + " " + detail);
 		this.errorCode = errorCode;
 	}
 }
