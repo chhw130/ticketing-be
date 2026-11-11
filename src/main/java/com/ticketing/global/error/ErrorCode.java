@@ -26,7 +26,16 @@ public enum ErrorCode {
 	CONCERT_NOT_FOUND(HttpStatus.NOT_FOUND, "공연을 찾을 수 없습니다."),
 
 	//스케줄
-	SCHEDULE_NOT_FOUND(HttpStatus.NOT_FOUND, "스케쥴을 찾을 수 없습니다.");
+	SCHEDULE_NOT_FOUND(HttpStatus.NOT_FOUND, "스케쥴을 찾을 수 없습니다."),
+
+	// 회원
+	LOGIN_ID_DUPLICATED(HttpStatus.CONFLICT, "이미 사용 중인 아이디입니다."),
+	LOGIN_FAILED(HttpStatus.UNAUTHORIZED, "아이디 또는 비밀번호가 올바르지 않습니다."),
+	UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다."),
+	MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "회원을 찾을 수 없습니다."),
+
+	// 예매
+	RESERVATION_ALREADY_CANCELED(HttpStatus.CONFLICT, "이미 취소된 예매입니다.");
 
 
 

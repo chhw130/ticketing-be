@@ -46,4 +46,8 @@ public class Schedule {
 		this.startAt = startAt;
 		this.ticketOpenAt = ticketOpenAt;
 	}
+
+	public boolean isOpen(LocalDateTime now) {
+		return !now.isBefore(ticketOpenAt);
+	}
 }

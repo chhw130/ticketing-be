@@ -2,6 +2,8 @@ package com.ticketing.reservation.domain;
 
 import com.ticketing.concert.domain.Schedule;
 import com.ticketing.concert.domain.Seat;
+import com.ticketing.global.error.BusinessException;
+import com.ticketing.global.error.ErrorCode;
 import com.ticketing.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -45,6 +47,14 @@ public class Reservation {
         this.seat = seat;
         this.schedule = schedule;
         this.status = ReserveStatus.CONFIRMED;
+    }
+
+    // 현재 entity관련 로직만 의존하고 있어 service layer에는 두지 않음.
+    public void cancel() {
+        if (this.status == ReserveStatus.CANCELED) {
+            throw new BusinessException(ErrorCode.RESERVATION_ALREADY_CANCELED, "id=" + id);
+        }
+        this.status = ReserveStatus.CANCELED;
     }
 
 }
