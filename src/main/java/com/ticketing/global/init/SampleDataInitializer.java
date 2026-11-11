@@ -115,9 +115,10 @@ public class SampleDataInitializer implements ApplicationRunner {
 			return memberRepository.findAll();
 		}
 		List<Member> members = new ArrayList<>();
-		members.add(new Member("테스터", false)); // X-User-Id: 1 로 쓸 사람 회원
+		// 로그인하지 않는 회원 생성자라 is_bot = true로 저장된다. 로그인할 사람 회원은 가입 API로 만든다
+		members.add(new Member("테스터"));
 		for (int i = 1; i <= 5; i++) {
-			members.add(new Member("봇" + i, true));
+			members.add(new Member("봇" + i));
 		}
 		return memberRepository.saveAll(members);
 	}

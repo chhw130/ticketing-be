@@ -17,6 +17,12 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = true, unique = true, length = 20)
+    private String loginId;
+
+    @Column(nullable = true, length = 60)
+    private String password;
+
     @Column(nullable = false, length = 15)
     private String nickname;
 
@@ -27,9 +33,15 @@ public class Member {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    public Member(String nickname, boolean isBot){
+    public Member(String nickname) {
         this.nickname = nickname;
-        this.isBot = isBot;
+        this.isBot = true;
     }
 
+    public Member(String loginId, String password, String nickname) {
+        this.loginId = loginId;
+        this.password = password;
+        this.nickname = nickname;
+        this.isBot = false;
+    }
 }

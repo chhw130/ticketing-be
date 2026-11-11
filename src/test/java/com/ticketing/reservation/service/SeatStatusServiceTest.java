@@ -60,7 +60,8 @@ class SeatStatusServiceTest {
 		seat3 = seatRepository.save(new Seat(schedule, 3, SeatGrade.S, 120_000L));
 		seat1 = seatRepository.save(new Seat(schedule, 1, SeatGrade.VIP, 150_000L));
 		seat2 = seatRepository.save(new Seat(schedule, 2, SeatGrade.VIP, 150_000L));
-		member = memberRepository.save(new Member("좌석테스터", false));
+		// 좌석 현황 테스트는 로그인과 상관없어서 로그인하지 않는 회원으로 만든다
+		member = memberRepository.save(new Member("좌석테스터"));
 	}
 
 	@AfterEach // FK 때문에 참조하는 쪽부터 지운다: 예매 → 좌석 → 회차 → 공연, 회원
